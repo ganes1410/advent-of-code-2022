@@ -1,16 +1,8 @@
-const file = await Deno.readTextFile("./input.txt");
-const rucksackItems = file.split("\n");
-
-const lowerCaseLetters = Array.from(Array(26)).map((_, i) =>
-  String.fromCharCode(i + 97)
-);
-const upperCaseLetters = Array.from(Array(26)).map((_, i) =>
-  String.fromCharCode(i + 65)
-);
-const priorties = [...lowerCaseLetters, ...upperCaseLetters];
+import { rucksackItems, priorties } from "./utils.ts";
 
 // common items in both compartments
-const commonItems = [];
+const commonItems: number[] = [];
+
 for (let index = 0; index < rucksackItems.length; index++) {
   const element = rucksackItems[index].split("");
   const middleElement = element.length / 2;
@@ -21,11 +13,12 @@ for (let index = 0; index < rucksackItems.length; index++) {
   ];
 
   const secondCompartmentSet = new Set(secondCompartment);
-  const commonItem = [...new Set(firstCompartment)].find((item) =>
-    secondCompartmentSet.has(item)
-  );
+  const commonItem =
+    [...new Set(firstCompartment)].find((item) =>
+      secondCompartmentSet.has(item)
+    ) ?? "";
 
-  if (!commonItem) continue;
+  // if (!commonItem) continue;
 
   commonItems.push(priorties.indexOf(commonItem) + 1);
 }
