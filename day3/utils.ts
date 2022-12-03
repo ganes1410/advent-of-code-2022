@@ -9,4 +9,19 @@ const upperCaseLetters = Array.from(Array(26)).map((_, i) =>
 );
 const priorties = [...lowerCaseLetters, ...upperCaseLetters];
 
-export { priorties, rucksackItems };
+function intersection(arr: Array<string[]>) {
+  const intersectionItems = arr.reduce((prev, curr) => {
+    const result: string[] = [];
+
+    for (const item of prev) {
+      if (curr.includes(item)) {
+        result.push(item);
+      }
+    }
+    return result;
+  });
+
+  return [...new Set(intersectionItems)];
+}
+
+export { priorties, rucksackItems, intersection };

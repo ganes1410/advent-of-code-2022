@@ -1,4 +1,4 @@
-import { priorties, rucksackItems } from "./utils.ts";
+import { intersection, priorties, rucksackItems } from "./utils.ts";
 
 const groupedElfItems: string[][] = [];
 
@@ -12,11 +12,7 @@ for (let index = 0; index < groupedElfItems.length; index++) {
   const element = groupedElfItems[index];
   const groups = element.map((el) => Array.from(el));
 
-  const commonItemsList = groups.reduce((prev, current) =>
-    prev.filter((el) => current.includes(el))
-  );
-
-  const commonItem = [...new Set(commonItemsList)][0];
+  const commonItem = intersection(groups)[0];
 
   commonItems.push(priorties.indexOf(commonItem) + 1);
 }
