@@ -1,7 +1,7 @@
 const file = await Deno.readTextFile("./input.txt");
 const dataStream = file.split("");
 
-let markerIndex = 0;
+let markerProcessedMessages = 0;
 
 for (let index = 3; index < dataStream.length; index++) {
   const startIndex = index - 3;
@@ -12,9 +12,9 @@ for (let index = 3; index < dataStream.length; index++) {
 
   // Break out after marker is found
   if (last4Messages.length === messagesSet.size) {
-    markerIndex = index + 1;
+    markerProcessedMessages = index + 1;
     break;
   }
 }
 
-console.log({ markerIndex }); //1804
+console.log({ markerProcessedMessages }); //1804
