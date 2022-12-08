@@ -28,6 +28,7 @@ for (let index = 1; index < commandsAndOutputs.length; index++) {
       const [, dirName] = currentCommand.split(" ");
       const fullPath = [...directoryList, dirName].join("");
 
+      // Set Initial size
       directorySizes[fullPath] = 0;
     } else {
       const [fileSize, _] = currentCommand.split(" ");

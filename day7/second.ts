@@ -6,11 +6,12 @@ const TOTAL_SPACE_NEED_FOR_UPDATE = 30000000;
 const SPACE_REQUIRED =
   TOTAL_SPACE_NEED_FOR_UPDATE - (TOTAL_DISK_SPACE - directorySizes[ROOT_DIR]);
 
-const applicableSizes = [];
+let mininumRequired = Number.POSITIVE_INFINITY;
+
 for (const dirSize of Object.values(directorySizes)) {
   if (dirSize >= SPACE_REQUIRED) {
-    applicableSizes.push(dirSize);
+    if (dirSize <= mininumRequired) mininumRequired = dirSize;
   }
 }
 
-console.log({ min: Math.min(...applicableSizes) });
+console.log({ mininumRequired }); //6296435
