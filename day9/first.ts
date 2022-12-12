@@ -1,59 +1,17 @@
-// const headMovements = Deno.readTextFileSync("./testInput.txt").split("\n");
-const headMovements = Deno.readTextFileSync("./input.txt").split("\n");
-
-type Direction = "R" | "L" | "U" | "D";
-type Position = { x: number; y: number };
-
-const visitTailPoints = new Set<string>();
+import {
+  headMovements,
+  moveHead,
+  moveTailtoHead,
+  Direction,
+  Position,
+} from "./utils.ts";
 
 let headPosition: Position = { x: 0, y: 0 };
 let tailPosition: Position = { x: 0, y: 0 };
+const visitTailPoints = new Set<string>();
 
 // Add initial position
 visitTailPoints.add(JSON.stringify({ x: 0, y: 0 }));
-
-function moveHead(position: Position, direction: Direction): Position {
-  switch (direction) {
-    case "R":
-      return { x: position.x + 1, y: position.y };
-    case "L":
-      return { x: position.x - 1, y: position.y };
-    case "U":
-      return { x: position.x, y: position.y + 1 };
-    case "D":
-      return { x: position.x, y: position.y - 1 };
-  }
-}
-
-function moveTailtoHead(
-  tailPosition: Position,
-  headPosition: Position
-): Position {
-  const diff: Position = {
-    x: headPosition.x - tailPosition.x,
-    y: headPosition.y - tailPosition.y,
-  };
-
-  // Already touching
-  if (Math.abs(diff.x) <= 1 && Math.abs(diff.y) <= 1) return tailPosition;
-
-  if (diff.y === 0) {
-    return {
-      x: diff.x === 2 ? tailPosition.x + 1 : tailPosition.x - 1,
-      y: tailPosition.y,
-    };
-  } else if (diff.x === 0) {
-    return {
-      x: tailPosition.x,
-      y: diff.y === 2 ? tailPosition.y + 1 : tailPosition.y - 1,
-    };
-  } else {
-    return {
-      x: diff.x > 0 ? tailPosition.x + 1 : tailPosition.x - 1,
-      y: diff.y > 0 ? tailPosition.y + 1 : tailPosition.y - 1,
-    };
-  }
-}
 
 for (let index = 0; index < headMovements.length; index++) {
   const [direction, amount] = headMovements[index].split(" ");
@@ -69,4 +27,4 @@ for (let index = 0; index < headMovements.length; index++) {
   }
 }
 
-console.log({ visitTailPoints: visitTailPoints.size });
+console.log({ visitTailPoints: visitTailPoints.size }); // 6384
