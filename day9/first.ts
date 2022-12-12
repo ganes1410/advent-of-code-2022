@@ -1,5 +1,5 @@
-const headMovements = Deno.readTextFileSync("./testInput.txt").split("\n");
-// const headMovements = Deno.readTextFileSync("./input.txt").split("\n");
+// const headMovements = Deno.readTextFileSync("./testInput.txt").split("\n");
+const headMovements = Deno.readTextFileSync("./input.txt").split("\n");
 
 type Direction = "R" | "L" | "U" | "D";
 type Position = { x: number; y: number };
@@ -34,8 +34,25 @@ function moveTailtoHead(
     y: headPosition.y - tailPosition.y,
   };
 
-  //  TODO: Do move logic here
-  return diff;
+  // Already touching
+  if (Math.abs(diff.x) <= 1 && Math.abs(diff.y) <= 1) return tailPosition;
+
+  if (diff.y === 0) {
+    return {
+      x: diff.x === 2 ? tailPosition.x + 1 : tailPosition.x - 1,
+      y: tailPosition.y,
+    };
+  } else if (diff.x === 0) {
+    return {
+      x: tailPosition.x,
+      y: diff.y === 2 ? tailPosition.y + 1 : tailPosition.y - 1,
+    };
+  } else {
+    return {
+      x: diff.x > 0 ? tailPosition.x + 1 : tailPosition.x - 1,
+      y: diff.y > 0 ? tailPosition.y + 1 : tailPosition.y - 1,
+    };
+  }
 }
 
 for (let index = 0; index < headMovements.length; index++) {
@@ -45,9 +62,8 @@ for (let index = 0; index < headMovements.length; index++) {
   while (directionCount) {
     headPosition = moveHead(headPosition, direction as Direction);
     tailPosition = moveTailtoHead(tailPosition, headPosition);
-    console.log({ headPosition, tailPosition });
 
-    // visitTailPoints.add(JSON.stringify(tailPosition));
+    visitTailPoints.add(JSON.stringify(tailPosition));
 
     directionCount--;
   }
