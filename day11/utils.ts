@@ -1,5 +1,5 @@
-const notes = Deno.readTextFileSync("./testInput.txt").split("\n\n");
-// const notes = Deno.readTextFileSync("./input.txt").split("\n\n");
+// const notes = Deno.readTextFileSync("./testInput.txt").split("\n\n");
+const notes = Deno.readTextFileSync("./input.txt").split("\n\n");
 
 type IMonkey = {
   name: string;
@@ -30,7 +30,7 @@ class Monkey {
     this.inspectionCount = 0;
   }
 
-  inspect(item: number, solutionType: "one" | "two") {
+  inspect(item: number, solutionType: "one" | "two", modulo?: number) {
     const operation = this.operations.split(" ").slice(1);
     let totalWorryLevel = 0;
 
@@ -57,7 +57,12 @@ class Monkey {
       }
     }
 
+    if (solutionType === "two" && modulo) {
+      totalWorryLevel %= modulo;
+    }
+
     this.divide(totalWorryLevel);
+
     this.inspectionCount += 1;
   }
 
@@ -104,4 +109,4 @@ for (let index = 0; index < notes.length; index++) {
   );
 }
 
-export { Monkey, monkeys };
+export { monkeys };

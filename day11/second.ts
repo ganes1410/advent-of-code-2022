@@ -1,6 +1,9 @@
 import { monkeys } from "./utils.ts";
 
-let TOTAL_ROUNDS = 20;
+let TOTAL_ROUNDS = 10000;
+
+// Get Modulo from Multiplication of all values
+const modulo = monkeys.reduce((acc, curr) => acc * curr.divisbleBy, 1);
 
 while (TOTAL_ROUNDS) {
   for (let index = 0; index < monkeys.length; index++) {
@@ -8,7 +11,7 @@ while (TOTAL_ROUNDS) {
     const monkeyItems = monkey.items;
     for (let itemIndex = 0; itemIndex < monkeyItems.length; itemIndex++) {
       const item = monkeyItems[itemIndex];
-      monkey.inspect(item, "two");
+      monkey.inspect(item, "two", modulo);
     }
   }
   TOTAL_ROUNDS -= 1;
@@ -24,4 +27,4 @@ const monkeyBusiness =
   top2InspectionCount[0].inspectionCount *
   top2InspectionCount[1].inspectionCount;
 
-console.log({ monkeyBusiness }); //57348
+console.log({ monkeyBusiness }); //14106266886
